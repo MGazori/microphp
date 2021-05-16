@@ -1,0 +1,17 @@
+{
+    "name": "mgazori/micro-php",
+    "description": "php micro framework",
+    "type": "project",
+    "license": "MIT",
+    "authors": [{
+        "name": "Mohammad Gazori",
+        "email": "amohammadgazori38@gmail.com"
+    }],
+    "minimum-stability": "beta",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    }
+}
