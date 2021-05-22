@@ -8,12 +8,14 @@ class Request
     private $method;
     private $agent;
     private $ip;
+    private $uri;
     public function __construct()
     {
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = strtolower($_SERVER['REQUEST_METHOD']);
         $this->ip = $_SERVER['REMOTE_ADDR'];
         $this->agent = $_SERVER['HTTP_USER_AGENT'];
         $this->params = $_REQUEST;
+        $this->uri = strtok($_SERVER['REQUEST_URI'], '?');
     }
     public function __get($name)
     {
