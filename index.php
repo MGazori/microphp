@@ -1,5 +1,10 @@
 <?php
 
 // Front Controller
+include 'bootstrap/init.php';
 
-echo $_SERVER['REQUEST_URI'];
+use App\Core\Routing\Router;
+
+
+$routers = new Router();
+$routers->run();

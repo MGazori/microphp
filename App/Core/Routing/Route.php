@@ -2,8 +2,6 @@
 
 namespace App\Core\Routing;
 
-use Exception;
-
 class Route
 {
     private static $routes = [];
@@ -21,12 +19,12 @@ class Route
     {
         $verbs = ['get', 'post', 'put', 'patch', 'delete', 'options'];
         if (!in_array($name, $verbs))
-            throw new Exception('Request method not support!');
+            throw new \Exception('Request method not support!');
         $uri = $arguments[0];
         $action = $arguments[1] ?? null;
         self::add($name, $uri, $action);
     }
-    public static function get()
+    public static function routes()
     {
         return self::$routes;
     }
