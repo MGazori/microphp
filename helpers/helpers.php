@@ -8,8 +8,9 @@ function asset_url($route)
 {
     return site_url('assets' . $route);
 }
-function view($path)
+function view($path, $data = [])
 {
+    extract($data);
     $path = str_replace('.', '/', $path);
     include_once BASEPATH . '/views/' . $path . '.php';
 }
