@@ -16,6 +16,16 @@ class Router
         $this->request = new Request();
         $this->routes = Route::routes();
         $this->current_route = $this->findRoute($this->request) ?? null;
+        # run middleware
+        if (isset($this->current_route['middleware']) && !empty($this->current_route['middleware']))
+            $this->runMiddleware();
+    }
+    private function runMiddleware()
+    {
+        foreach ($this->current_route['middleware'] as $middleware_class) {
+            $middle_ware_obj = new $middleware_class;
+            $middle_ware_obj->handle();
+        }
     }
     public function findRoute(Request $request)
     {
