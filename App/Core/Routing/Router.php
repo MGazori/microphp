@@ -30,11 +30,28 @@ class Router
     public function findRoute(Request $request)
     {
         foreach ($this->routes as $route) {
-            if (in_array($request->method, $route['methods']) && $request->uri == $route['uri']) {
+            if (!in_array($request->method, $route['methods'])) {
+                return null;
+            }
+            if ($this->regexMatched($route['uri'])) {
                 return $route;
             }
         }
         return null;
+    }
+    private function regexMatched($uri)
+    {
+        global $request;
+        $pattern = '/^' . str_replace(['/', '{', '}'], ['\/', '(?<', '>[-%\w]+)'], $uri) . '$/';
+        $result = preg_match($pattern, $this->request->uri, $matches);
+        if (!$result)
+            return false;
+        foreach ($matches as $key => $value) {
+            if (!is_int($key)) {
+                $request->add_route_params($key, $value);
+            }
+        }
+        return true;
     }
     public function isInvalidRequestMethod(Request $request)
     {
