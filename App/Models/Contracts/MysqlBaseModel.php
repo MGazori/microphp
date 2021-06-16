@@ -114,6 +114,12 @@ class MysqlBaseModel extends BaseModel
         return $this->connection->count($this->table, $where);
     }
 
+    //count all record
+    public function countAll(): int
+    {
+        return $this->count([]);
+    }
+
     //sum
     public function sum(string $columns, array $where): int
     {
