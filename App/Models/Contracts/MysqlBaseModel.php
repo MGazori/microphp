@@ -80,15 +80,18 @@ class MysqlBaseModel extends BaseModel
     }
 
     // Read (Select) Multiple
-    public function get(array $columns, array $where): array
+    public function get(string|array $columns, array $where): array
     {
+        $page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
+        $start = ($page - 1) * $this->pageSize;
+        $where['LIMIT'] = [$start, $this->pageSize];
         return $this->connection->select($this->table, $columns, $where);
     }
 
     // Read (Select) Multiple All
     public function getAll(): array
     {
-        return $this->connection->select($this->table, '*');
+        return $this->get('*', []);
     }
 
     // Update records

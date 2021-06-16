@@ -30,12 +30,10 @@ class Router
     public function findRoute(Request $request)
     {
         foreach ($this->routes as $route) {
-            if (!in_array($request->method, $route['methods'])) {
+            if (!in_array($request->method, $route['methods']))
                 continue;
-            }
-            if ($this->regexMatched($route['uri'])) {
+            if ($this->regexMatched($route['uri']))
                 return $route;
-            }
         }
         return null;
     }
@@ -47,18 +45,16 @@ class Router
         if (!$result)
             return false;
         foreach ($matches as $key => $value) {
-            if (!is_int($key)) {
+            if (!is_int($key))
                 $request->add_route_params($key, $value);
-            }
         }
         return true;
     }
     public function isInvalidRequestMethod(Request $request)
     {
         foreach ($this->routes as $route) {
-            if ($request->uri == $route['uri'] && !in_array($request->method, $route['methods'])) {
+            if ($request->uri == $route['uri'] && !in_array($request->method, $route['methods']))
                 return true;
-            }
         }
         return false;
     }
@@ -80,9 +76,8 @@ class Router
         if ($this->isInvalidRequestMethod($this->request))
             $this->dispatch405();
         #for 404
-        if (is_null($this->current_route)) {
+        if (is_null($this->current_route))
             $this->dispatch404();
-        }
         $this->dispatch($this->current_route);
     }
     private function dispatch($route)

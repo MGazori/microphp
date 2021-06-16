@@ -9,7 +9,7 @@ interface CrudInterface
 
     // Read (Select) Single | Multiple
     public function find(int $id): object|null;
-    public function get(array $columns, array $where): array;
+    public function get(string|array $columns, array $where): array;
 
     // Update records
     public function update(array $data, array $where): int;
