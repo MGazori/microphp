@@ -80,18 +80,20 @@ class MysqlBaseModel extends BaseModel
     }
 
     // Read (Select) Multiple
-    public function get(string|array $columns, array $where): array
+    public function get(string|array $columns, array $where, bool $pagination = false): array
     {
-        $page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
-        $start = ($page - 1) * $this->pageSize;
-        $where['LIMIT'] = [$start, $this->pageSize];
+        if ($pagination) {
+            $page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
+            $start = ($page - 1) * $this->pageSize;
+            $where['LIMIT'] = [$start, $this->pageSize];
+        }
         return $this->connection->select($this->table, $columns, $where);
     }
 
     // Read (Select) Multiple All
-    public function getAll(): array
+    public function getAll(bool $pagination = false): array
     {
-        return $this->get('*', []);
+        return $this->get('*', [], $pagination);
     }
 
     // Update records
