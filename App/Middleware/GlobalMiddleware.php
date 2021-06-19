@@ -12,6 +12,6 @@ class GlobalMiddleware
      * @var array
      */
     public static array $globalMiddleware = [
-        \App\Middleware\Global\SanitizeParams::class,
+        \App\Middleware\Globals\SanitizeParams::class,
     ];
 }

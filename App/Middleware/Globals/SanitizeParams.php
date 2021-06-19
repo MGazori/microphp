@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Middleware\Global;
+namespace App\Middleware\Globals;
 
 use App\Middleware\Contract\MiddlewareInterface;
 
