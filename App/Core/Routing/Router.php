@@ -4,6 +4,7 @@ namespace App\Core\Routing;
 
 use App\Core\Request;
 use App\Core\Routing\Route;
+use App\Middleware\GlobalMiddleware;
 
 class Router
 {
@@ -11,14 +12,26 @@ class Router
     private $routes;
     private $current_route;
     private const BASE_CONTROLLER_NAME_SPACE = 'App\Controllers\\';
+    private array $global_middleware;
     public function __construct()
     {
         $this->request = new Request();
         $this->routes = Route::routes();
         $this->current_route = $this->findRoute($this->request) ?? null;
+        $this->global_middleware = GlobalMiddleware::$globalMiddleware;
+        #run global middleware
+        if (!empty($this->global_middleware))
+            $this->runGlobalMiddleware();
         # run middleware
         if (isset($this->current_route['middleware']) && !empty($this->current_route['middleware']))
             $this->runMiddleware();
+    }
+    private function runGlobalMiddleware()
+    {
+        foreach ($this->global_middleware as $global_middleware_class) {
+            $global_middle_ware_obj = new $global_middleware_class;
+            $global_middle_ware_obj->handle();
+        }
     }
     private function runMiddleware()
     {
