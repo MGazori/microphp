@@ -25,5 +25,5 @@ function view_die($path, $data = [])
 
 function xss_clean($str)
 {
-    return filter_var(htmlspecialchars($str), FILTER_SANITIZE_STRING);
+    return htmlspecialchars($str);
 }
